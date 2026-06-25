@@ -1,0 +1,87 @@
+.employee-table-container {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+
+  height: 500px;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.employee-table-container h2 {
+  margin-bottom: 15px;
+
+  color: #1f2937;
+}
+
+.employee-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.employee-table thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 5;
+}
+
+.employee-table tbody {
+  display: block;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  height: 380px;
+}
+
+.employee-table thead,
+.employee-table tbody tr {
+  display: table;
+
+  width: 100%;
+
+  table-layout: fixed;
+}
+
+.employee-table th {
+  background: #4338ca;
+
+  color: white;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 14px;
+
+  font-size: 14px;
+}
+
+.employee-table td {
+  padding: 14px;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  border-bottom: 1px solid #eceff4;
+}
+
+.employee-table tbody tr:hover {
+  background: #f8fafc;
+}
+.status-active{
+    background-color: green;
+    color:white;
+    padding:5px;
+    border-radius: 6px;
+}
+.status-inactive{
+    background-color: rgb(214, 12, 32);
+    color:white;
+    padding:5px;
+    border-radius: 6px;
+}

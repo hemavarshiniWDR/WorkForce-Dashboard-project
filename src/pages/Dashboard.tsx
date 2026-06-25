@@ -1,11 +1,16 @@
+import "./Dashboard.css";
 import KPICard from "../components/KPI/KPICard";
-
 import LineChartCard from "../components/Charts/LineChartCard";
 import AreaChartCard from "../components/Charts/AreaChartCard";
-import DonutChartCard from "../components/Charts/DonutChartCard";
 import PieChartCard from "../components/Charts/PieChartCard";
+import DonutChartCard from "../components/Charts/DonutChartCard";
 
-const employeeData = [
+import EmployeeTable from "../components/EmployeeTable/EmployeeTable";
+import DepartmentSummary from "../components/DepartmentSummary/DepartmentSummary";
+
+import { employees, departments,kpis} from "../data/mockData";
+
+ const employeeData = [
   { month: "Jan", value: 1050 },
   { month: "Feb", value: 1120 },
   { month: "Mar", value: 1380 },
@@ -24,34 +29,51 @@ const hiringData = [
   { name: "Remaining", value: 92 },
 ];
 
-const skillCoverageData = [
+const skillData = [
   { name: "Covered", value: 91 },
   { name: "Remaining", value: 9 },
 ];
 
+const activeEmployeeTrend = [
+  { month: "Jan", value: 12 },
+  { month: "Feb", value: 19 },
+  { month: "Mar", value: 16 },
+  { month: "Apr", value: 17 },
+];
+
 const Dashboard = () => {
   return (
-    <>
-      <h1>Workforce Analytics Dashboard</h1>
+    <div className="dashboard">
+      <h1 className="dashboard-title">Workforce Analytics Dashboard</h1>
 
       <div className="kpi-grid">
-        <KPICard title="Total Employees" value="1250">
+        <KPICard title={kpis[0].title} value={kpis[0].value}>
           <LineChartCard data={employeeData} />
         </KPICard>
 
-        <KPICard title="Attrition Rate" value="12%">
+        <KPICard title={kpis[1].title} value={kpis[1].value}>
           <AreaChartCard data={attritionData} />
         </KPICard>
 
-        <KPICard title="Hiring Rate" value="8%">
+        <KPICard title={kpis[2].title} value={kpis[2].value}>
           <PieChartCard data={hiringData} />
         </KPICard>
 
-        <KPICard title="Skill Coverage" value="91%">
-          <DonutChartCard data={skillCoverageData} />
+        <KPICard title={kpis[3].title} value={kpis[3].value}>
+          <DonutChartCard data={skillData} />
+        </KPICard>
+
+        <KPICard title={kpis[4].title} value={kpis[4].value}>
+          <LineChartCard data={activeEmployeeTrend} />
         </KPICard>
       </div>
-    </>
+
+      <div className="dashboard-bottom">
+        <EmployeeTable employees={employees} />
+
+        <DepartmentSummary departments={departments} />
+      </div>
+    </div>
   );
 };
 
