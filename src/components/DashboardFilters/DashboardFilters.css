@@ -1,0 +1,79 @@
+.dashboard-filters{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+margin-bottom:25px;
+
+background:white;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.dashboard-filters input,
+
+.dashboard-filters select{
+
+padding:12px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+min-width:180px;
+
+font-size:14px;
+
+}
+
+.dashboard-filters button{
+
+padding:12px 20px;
+
+border:none;
+
+border-radius:8px;
+
+background:#4338ca;
+
+color:white;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.dashboard-filters button:hover{
+
+background:#312e81;
+
+}
+
+@media(max-width:768px){
+
+.dashboard-filters{
+
+flex-direction:column;
+
+}
+
+.dashboard-filters input,
+
+.dashboard-filters select,
+
+.dashboard-filters button{
+
+width:100%;
+
+}
+
+}

@@ -1,76 +1,118 @@
+import { useCallback } from "react";
 import "./Dashboard.css";
+
 import KPICard from "../components/KPI/KPICard";
 import LineChartCard from "../components/Charts/LineChartCard";
 import AreaChartCard from "../components/Charts/AreaChartCard";
 import PieChartCard from "../components/Charts/PieChartCard";
 import DonutChartCard from "../components/Charts/DonutChartCard";
 
+import DashboardFilters from "../components/DashboardFilters/DashboardFilters";
 import EmployeeTable from "../components/EmployeeTable/EmployeeTable";
 import DepartmentSummary from "../components/DepartmentSummary/DepartmentSummary";
 
-import { employees, departments,kpis} from "../data/mockData";
+import useEmployeeSearch from "../hooks/useEmployeeSearch";
+import useDashboardFilter from "../hooks/useDashboardFilter";
+import useKPICalculator from "../hooks/useKPICalculator";
 
- const employeeData = [
-  { month: "Jan", value: 1050 },
-  { month: "Feb", value: 1120 },
-  { month: "Mar", value: 1380 },
-  { month: "Apr", value: 1250 },
-];
-
-const attritionData = [
-  { month: "Jan", value: 8 },
-  { month: "Feb", value: 20 },
-  { month: "Mar", value: 10 },
-  { month: "Apr", value: 12 },
-];
-
-const hiringData = [
-  { name: "Hired", value: 8 },
-  { name: "Remaining", value: 92 },
-];
-
-const skillData = [
-  { name: "Covered", value: 91 },
-  { name: "Remaining", value: 9 },
-];
-
-const activeEmployeeTrend = [
-  { month: "Jan", value: 12 },
-  { month: "Feb", value: 19 },
-  { month: "Mar", value: 16 },
-  { month: "Apr", value: 17 },
-];
+import { employees, departments,kpis } from "../data/mockData";
 
 const Dashboard = () => {
+  const {
+    search,
+    setSearch,
+    filteredEmployees: searchedEmployees,
+    searchRef,
+  } = useEmployeeSearch(employees);
+
+  const {
+    department,
+    setDepartment,
+    location,
+    setLocation,
+    status,
+    setStatus,
+    filteredEmployees,
+  } = useDashboardFilter(searchedEmployees);
+
+  const {
+    totalEmployees,
+    activeEmployees,
+    attritionRate,
+    hiringRate,
+    skillCoverage,
+    employeeTrend,
+    attritionTrend,
+    activeTrend,
+    hiringChart,
+    skillChart,
+  } = useKPICalculator(filteredEmployees);
+
+  const refreshDashboard = useCallback(() => {
+    window.location.reload();
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setSearch("");
+    setDepartment("");
+    setLocation("");
+    setStatus("");
+  }, []);
+
   return (
     <div className="dashboard">
       <h1 className="dashboard-title">Workforce Analytics Dashboard</h1>
 
+      <DashboardFilters
+        search={search}
+        searchRef={searchRef}
+        department={department}
+        location={location}
+        status={status}
+        onSearchChange={setSearch}
+        onDepartmentChange={setDepartment}
+        onLocationChange={setLocation}
+        onStatusChange={setStatus}
+        onRefresh={refreshDashboard}
+        onReset={resetFilters}
+      />
+
       <div className="kpi-grid">
-        <KPICard title={kpis[0].title} value={kpis[0].value}>
-          <LineChartCard data={employeeData} />
-        </KPICard>
-
-        <KPICard title={kpis[1].title} value={kpis[1].value}>
-          <AreaChartCard data={attritionData} />
-        </KPICard>
-
-        <KPICard title={kpis[2].title} value={kpis[2].value}>
-          <PieChartCard data={hiringData} />
-        </KPICard>
-
-        <KPICard title={kpis[3].title} value={kpis[3].value}>
-          <DonutChartCard data={skillData} />
-        </KPICard>
-
-        <KPICard title={kpis[4].title} value={kpis[4].value}>
-          <LineChartCard data={activeEmployeeTrend} />
-        </KPICard>
+        {kpis.map((kpi) => (
+          <KPICard
+            key={kpi.id}
+            title={kpi.title}
+            value={
+              kpi.title === "Total Employees"
+                ? totalEmployees.toString()
+                : kpi.title === "Attrition Rate"
+                  ? `${attritionRate}%`
+                  : kpi.title === "Hiring Rate"
+                    ? `${hiringRate}%`
+                    : kpi.title === "Skill Coverage"
+                      ? `${skillCoverage}%`
+                      : activeEmployees.toString()
+            }
+          >
+            {kpi.title === "Total Employees" && (
+              <LineChartCard data={employeeTrend} />
+            )}
+            {kpi.title === "Attrition Rate" && (
+              <AreaChartCard data={attritionTrend} />
+            )}
+            {kpi.title === "Hiring Rate" && <PieChartCard data={hiringChart} />}
+            {kpi.title === "Skill Coverage" && (
+              <DonutChartCard data={skillChart} />
+            )}
+            {kpi.title === "Active Employees" && (
+              <LineChartCard data={activeTrend} />
+            )}
+          </KPICard>
+        ))}
       </div>
 
       <div className="dashboard-bottom">
-        <EmployeeTable employees={employees} />
-
+        <EmployeeTable employees={filteredEmployees} />
         <DepartmentSummary departments={departments} />
       </div>
     </div>

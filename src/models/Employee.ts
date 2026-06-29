@@ -5,5 +5,7 @@ export interface Employee {
   designation: string;
   experience: number;
   skill: string;
+  location:string;
+  month:string;
   status: "Active" | "Inactive";
 }

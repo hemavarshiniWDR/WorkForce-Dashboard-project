@@ -10,7 +10,9 @@ export const employees: Employee[] = [
     designation: "React Developer",
     experience: 2,
     skill: "React",
+    location: "Chennai",
     status: "Active",
+    month: "Jan",
   },
   {
     id: 2,
@@ -19,7 +21,9 @@ export const employees: Employee[] = [
     designation: "HR Executive",
     experience: 4,
     skill: "Recruitment",
+    location: "Bangalore",
     status: "Active",
+    month: "Feb",
   },
   {
     id: 3,
@@ -28,7 +32,9 @@ export const employees: Employee[] = [
     designation: "Accountant",
     experience: 5,
     skill: "Accounting",
+    location: "Hyderabad",
     status: "Active",
+    month: "Jan",
   },
   {
     id: 4,
@@ -37,7 +43,9 @@ export const employees: Employee[] = [
     designation: "Sales Executive",
     experience: 3,
     skill: "Sales",
+    location: "Bangalore",
     status: "Inactive",
+    month: "Apr",
   },
   {
     id: 5,
@@ -46,7 +54,9 @@ export const employees: Employee[] = [
     designation: "SEO Analyst",
     experience: 4,
     skill: "SEO",
+    location: "Chennai",
     status: "Active",
+    month: "Feb",
   },
   {
     id: 6,
@@ -55,7 +65,9 @@ export const employees: Employee[] = [
     designation: "Web Developer",
     experience: 2,
     skill: "Web",
+    location: "Hyderabad",
     status: "Active",
+    month: "Mar",
   },
   {
     id: 7,
@@ -64,7 +76,9 @@ export const employees: Employee[] = [
     designation: "UI Developer",
     experience: 3,
     skill: "HTML/CSS",
+    location: "Bangalore",
     status: "Active",
+    month: "Apr",
   },
   {
     id: 8,
@@ -73,7 +87,9 @@ export const employees: Employee[] = [
     designation: "Sales Manager",
     experience: 6,
     skill: "CRM",
+    location: "Chennai",
     status: "Active",
+    month: "Jan",
   },
   {
     id: 9,
@@ -82,7 +98,9 @@ export const employees: Employee[] = [
     designation: "Finance Analyst",
     experience: 4,
     skill: "Excel",
+    location: "Bangalore",
     status: "Inactive",
+    month: "Feb",
   },
   {
     id: 10,
@@ -91,7 +109,9 @@ export const employees: Employee[] = [
     designation: "Content Writer",
     experience: 3,
     skill: "Content",
+    location: "Coimbatore",
     status: "Active",
+    month: "Apr",
   },
   {
     id: 11,
@@ -100,7 +120,9 @@ export const employees: Employee[] = [
     designation: "Recruiter",
     experience: 2,
     skill: "Hiring",
+    location: "Delhi",
     status: "Active",
+    month: "Mar",
   },
   {
     id: 12,
@@ -109,7 +131,9 @@ export const employees: Employee[] = [
     designation: "Backend Developer",
     experience: 5,
     skill: "Node.js",
+    location: "Hyderabad",
     status: "Active",
+    month: "Mar",
   },
   {
     id: 13,
@@ -118,7 +142,9 @@ export const employees: Employee[] = [
     designation: "Full Stack Developer",
     experience: 6,
     skill: "React",
+    location: "Coimbatore",
     status: "Active",
+    month: "Mar",
   },
   {
     id: 14,
@@ -127,7 +153,9 @@ export const employees: Employee[] = [
     designation: "Auditor",
     experience: 5,
     skill: "Audit",
+    location: "Bangalore",
     status: "Active",
+    month: "Feb",
   },
   {
     id: 15,
@@ -136,7 +164,9 @@ export const employees: Employee[] = [
     designation: "Sales Executive",
     experience: 2,
     skill: "Negotiation",
+    location: "Delhi",
     status: "Inactive",
+    month: "Jan",
   },
   {
     id: 16,
@@ -145,7 +175,9 @@ export const employees: Employee[] = [
     designation: "Digital Marketer",
     experience: 4,
     skill: "Google Ads",
+    location: "Chennai",
     status: "Active",
+    month: "Jan",
   },
   {
     id: 17,
@@ -154,7 +186,9 @@ export const employees: Employee[] = [
     designation: "React Developer",
     experience: 3,
     skill: "React",
+    location: "Hyderabad",
     status: "Active",
+    month: "Mar",
   },
   {
     id: 18,
@@ -163,7 +197,9 @@ export const employees: Employee[] = [
     designation: "Manager",
     experience: 8,
     skill: "Finance",
+    location: "Coimbatore",
     status: "Active",
+    month: "Apr",
   },
   {
     id: 19,
@@ -172,7 +208,9 @@ export const employees: Employee[] = [
     designation: "HR Manager",
     experience: 7,
     skill: "Management",
+    location: "Delhi",
     status: "Active",
+    month: "Jan",
   },
   {
     id: 20,
@@ -181,7 +219,9 @@ export const employees: Employee[] = [
     designation: "Brand Executive",
     experience: 3,
     skill: "Branding",
+    location: "Bangalore",
     status: "Active",
+    month: "Feb",
   },
 ];
 
@@ -216,27 +256,22 @@ export const departments: Department[] = [
 export const kpis: WorkforceKPI[] = [
   {
     id: 1,
-    title: "Total Employees",
-    value: "20",
+    title: "Total Employees"
   },
   {
     id: 2,
-    title: "Attrition Rate",
-    value: "12%",
+    title: "Attrition Rate"
   },
   {
     id: 3,
-    title: "Hiring Rate",
-    value: "8%",
+    title: "Hiring Rate"
   },
   {
     id: 4,
-    title: "Skill Coverage",
-    value: "91%",
+    title: "Skill Coverage"
   },
   {
     id: 5,
-    title: "Active Employees",
-    value: "17",
+    title: "Active Employees"
   },
 ];
