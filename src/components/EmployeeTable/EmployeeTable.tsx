@@ -52,18 +52,21 @@ const EmployeeTable = ({ employees }: EmployeeTableProps) => {
                   </td>
                 </tr>
               ))}
+              <div className="pagination">
+                <button onClick={previousPage} disabled={currentPage === 1}>
+                  Previous
+                </button>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={nextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
             </tbody>
-            <div className="pagination">
-              <button onClick={previousPage} disabled={currentPage === 1}>
-                Previous
-              </button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
-              <button onClick={nextPage} disabled={currentPage === totalPages}>
-                Next
-              </button>
-            </div>
           </table>
         </div>
       </div>
