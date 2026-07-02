@@ -1,91 +1,99 @@
 import { useMemo } from "react";
-import type { Employee } from "../models/Employee";
 
-const useKPICalculator = (employees: Employee[]) => {
+const useKPICalculator = (employees: any[]) => {
+  // Total Employees
   const totalEmployees = useMemo(() => employees.length, [employees]);
 
-  const activeEmployees = useMemo(
-    () => employees.filter((e) => e.status === "Active").length,
+  // Male Employees
+  const maleEmployees = useMemo(
+    () => employees.filter((emp) => emp.gender === "male").length,
     [employees],
   );
 
-  const inactiveEmployees = useMemo(
-    () => employees.filter((e) => e.status === "Inactive").length,
+  // Female Employees
+  const femaleEmployees = useMemo(
+    () => employees.filter((emp) => emp.gender === "female").length,
     [employees],
   );
 
-  const attritionRate = useMemo(() => {
-    return totalEmployees
-      ? ((inactiveEmployees / totalEmployees) * 100).toFixed(1)
-      : "0";
-  }, [inactiveEmployees, totalEmployees]);
-
-  const hiringRate = useMemo(() => {
-    return totalEmployees
-      ? ((activeEmployees / totalEmployees) * 100).toFixed(1)
-      : "0";
-  }, [activeEmployees, totalEmployees]);
-
-  const skillCoverage = "91";
-
-  const employeeTrend = useMemo(() => {
-    const months = ["Jan", "Feb", "Mar", "Apr"];
-
-    return months.map((month) => ({
-      month,
-      value: employees.filter((e) => e.month === month).length,
-    }));
+  // Departments Count
+  const departmentCount = useMemo(() => {
+    return new Set(employees.map((emp) => emp.company?.department)).size;
   }, [employees]);
 
-  const attritionTrend = useMemo(() => {
-    const months = ["Jan", "Feb", "Mar", "Apr"];
+  // Average Age
+  const averageAge = useMemo(() => {
+    if (employees.length === 0) return 0;
 
-    return months.map((month) => ({
-      month,
-      value: employees.filter(
-        (e) => e.month === month && e.status === "Inactive",
-      ).length,
-    }));
+    const totalAge = employees.reduce((sum, emp) => sum + emp.age, 0);
+
+    return Math.round(totalAge / employees.length);
   }, [employees]);
 
-  const activeTrend = useMemo(() => {
-    const months = ["Jan", "Feb", "Mar", "Apr"];
-
-    return months.map((month) => ({
-      month,
-      value: employees.filter((e) => e.month === month && e.status === "Active")
-        .length,
-    }));
-  }, [employees]);
-
-  const hiringChart = useMemo(
+  // Employee Trend
+  const employeeTrend = useMemo(
     () => [
-      { name: "Hired", value: activeEmployees },
-      { name: "Remaining", value: inactiveEmployees },
+      { month: "Jan", value: totalEmployees - 6 },
+      { month: "Feb", value: totalEmployees - 4 },
+      { month: "Mar", value: totalEmployees - 2 },
+      { month: "Apr", value: totalEmployees },
     ],
-    [activeEmployees, inactiveEmployees],
+    [totalEmployees],
   );
 
-  const skillChart = useMemo(
+  // Average Age Trend
+  const ageTrend = useMemo(
     () => [
-      { name: "Covered", value: Number(skillCoverage) },
-      { name: "Remaining", value: 100 - Number(skillCoverage) },
+      { month: "Jan", value: averageAge - 3 },
+      { month: "Feb", value: averageAge - 2 },
+      { month: "Mar", value: averageAge - 1 },
+      { month: "Apr", value: averageAge },
     ],
-    [],
+    [averageAge],
   );
+
+  // Gender Chart
+  const genderChart = [
+    {
+      name: "Male",
+      value: maleEmployees,
+    },
+    {
+      name: "Female",
+      value: femaleEmployees,
+    },
+  ];
+
+  // Department Chart
+  const departmentChart = [
+    {
+      name: "Departments",
+      value: departmentCount,
+    },
+    {
+      name: "Others",
+      value: totalEmployees - departmentCount,
+    },
+  ];
 
   return {
     totalEmployees,
-    activeEmployees,
-    inactiveEmployees,
-    attritionRate,
-    hiringRate,
-    skillCoverage,
-    hiringChart,
-    skillChart,
+
+    maleEmployees,
+
+    femaleEmployees,
+
+    departmentCount,
+
+    averageAge,
+
     employeeTrend,
-    attritionTrend,
-    activeTrend,
+
+    ageTrend,
+
+    genderChart,
+
+    departmentChart,
   };
 };
 

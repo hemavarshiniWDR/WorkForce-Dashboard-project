@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import type { Employee } from "../models/Employee";
+import { useMemo, useRef, useState, useEffect } from "react";
 
-const useEmployeeSearch = (employees: Employee[]) => {
+const useEmployeeSearch = (employees: any[]) => {
   const [search, setSearch] = useState("");
-  const [filteredEmployees, setFilteredEmployees] =
-    useState<Employee[]>(employees);
 
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -12,20 +9,24 @@ const useEmployeeSearch = (employees: Employee[]) => {
     searchRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    const result = employees.filter(
-      (employee) =>
-        employee.name.toLowerCase().includes(search.toLowerCase()) ||
-        employee.id.toString().includes(search),
-    );
+  const filteredEmployees = useMemo(() => {
+    return employees.filter((employee) => {
+      const fullName = `${employee.firstName} ${employee.lastName}`;
 
-    setFilteredEmployees(result);
-  }, [search, employees]);
+      return (
+        fullName.toLowerCase().includes(search.toLowerCase()) ||
+        employee.id.toString().includes(search)
+      );
+    });
+  }, [employees, search]);
 
   return {
     search,
+
     setSearch,
+
     filteredEmployees,
+
     searchRef,
   };
 };

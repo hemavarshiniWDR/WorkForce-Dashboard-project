@@ -14,6 +14,7 @@ const EmployeeTable = ({ employees }: EmployeeTableProps) => {
     <>
       <div className="employee-table-container">
         <h2>Employee Table</h2>
+
         <div className="table-wrapper">
           <table className="employee-table">
             <thead>
@@ -22,8 +23,6 @@ const EmployeeTable = ({ employees }: EmployeeTableProps) => {
                 <th>Employee</th>
                 <th>Department</th>
                 <th>Designation</th>
-                <th>Experience</th>
-                <th>Skill</th>
                 <th>Location</th>
                 <th>Status</th>
               </tr>
@@ -33,21 +32,28 @@ const EmployeeTable = ({ employees }: EmployeeTableProps) => {
               {currentData.map((employee) => (
                 <tr key={employee.id}>
                   <td>{employee.id}</td>
-                  <td>{employee.name}</td>
-                  <td>{employee.department}</td>
-                  <td>{employee.designation}</td>
-                  <td>{employee.experience} Years</td>
-                  <td>{employee.skill}</td>
-                  <td>{employee.location}</td>
+
+                  <td>
+                    {employee.firstName} {employee.lastName}
+                  </td>
+
+                  <td>{employee.company?.department}</td>
+
+                  <td>{employee.company?.title}</td>
+
+                  <td>{employee.address?.city}</td>
+
                   <td>
                     <span
                       className={
-                        employee.status === "Active"
+                        employee.role === "admin"
                           ? "status-active"
-                          : "status-inactive"
+                          : employee.role === "moderator"
+                            ? "status-pending"
+                            : "status-inactive"
                       }
                     >
-                      {employee.status}
+                      {employee.role}
                     </span>
                   </td>
                 </tr>
@@ -56,9 +62,11 @@ const EmployeeTable = ({ employees }: EmployeeTableProps) => {
                 <button onClick={previousPage} disabled={currentPage === 1}>
                   Previous
                 </button>
+
                 <span>
                   Page {currentPage} of {totalPages}
                 </span>
+
                 <button
                   onClick={nextPage}
                   disabled={currentPage === totalPages}

@@ -74,16 +74,30 @@
   background: #f8fafc;
 }
 .status-active{
-    background-color: green;
-    color:white;
-    padding:5px;
-    border-radius: 6px;
+    background:#dcfce7;
+    color:#15803d;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
 }
+
+.status-pending{
+    background:#fef3c7;
+    color:#b45309;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
 .status-inactive{
-    background-color: rgb(214, 12, 32);
-    color:white;
-    padding:5px;
-    border-radius: 6px;
+    background:#fee2e2;
+    color:#dc2626;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
 }
 
 .pagination{

@@ -1,11 +1,19 @@
 export interface Employee {
   id: number;
-  name: string;
-  department: string;
-  designation: string;
-  experience: number;
-  skill: string;
-  location:string;
-  month:string;
-  status: "Active" | "Inactive";
+  firstName: string;
+  lastName: string;
+  gender: string;
+  age: number;
+  role: string;
+
+  company: {
+    department: string;
+    title: string;
+  };
+
+  address: {
+    city: string;
+  };
+
+  phone: string;
 }

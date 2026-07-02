@@ -2,39 +2,86 @@
     background: white;
     border-radius: 18px;
     padding: 20px;
-    box-shadow: 0 8px 25px rgba(15,23,42,.08);
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+
     height: 500px;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
-    -ms-overflow-style: none;  
-  scrollbar-width: none; 
 }
 
+.department-summary h2 {
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+
+/* Only this section scrolls */
 .department-grid {
     flex: 1;
+    overflow-y: auto;
+
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding-bottom: 15px;
+
+    padding-right: 5px;
 }
 
-.department-card{
-
-    background:#f8fafc;
-
-    border-left:5px solid #4338ca;
-
-    padding:18px;
-
-    border-radius:12px;
-
-    transition:.3s;
+/* Scrollbar */
+.department-grid::-webkit-scrollbar {
+    width: 6px;
 }
 
-.department-card:hover{
+.department-grid::-webkit-scrollbar-thumb {
+    background: #4338ca;
+    border-radius: 10px;
+}
 
-    transform:translateX(5px);
+.department-grid::-webkit-scrollbar-track {
+    background: #eef2ff;
+}
 
-    background:#eef2ff;
+/* Department Card */
+.department-card {
+    background: #f8fafc;
+    border-left: 5px solid #4338ca;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    transition: 0.3s;
+
+    flex-shrink: 0;
+}
+
+.department-card:hover {
+    background: #eef2ff;
+    transform: translateX(5px);
+}
+
+.department-card h3 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 18px;
+}
+
+.department-card p {
+    margin-top: 10px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.department-count {
+    display: inline-block;
+    margin-top: 12px;
+
+    background: #4338ca;
+    color: white;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
 }

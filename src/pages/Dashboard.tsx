@@ -15,9 +15,14 @@ import useEmployeeSearch from "../hooks/useEmployeeSearch";
 import useDashboardFilter from "../hooks/useDashboardFilter";
 import useKPICalculator from "../hooks/useKPICalculator";
 
-import { employees, departments,kpis } from "../data/mockData";
+import useEmployees from "../hooks/useEmployees";
+
 
 const Dashboard = () => {
+  // React Query API
+  const { data: employees = [], isLoading, isError } = useEmployees();
+
+  // Search
   const {
     search,
     setSearch,
@@ -25,6 +30,7 @@ const Dashboard = () => {
     searchRef,
   } = useEmployeeSearch(employees);
 
+  // Filters
   const {
     department,
     setDepartment,
@@ -37,15 +43,14 @@ const Dashboard = () => {
 
   const {
     totalEmployees,
-    activeEmployees,
-    attritionRate,
-    hiringRate,
-    skillCoverage,
+    maleEmployees,
+    femaleEmployees,
+    departmentCount,
+    averageAge,
     employeeTrend,
-    attritionTrend,
-    activeTrend,
-    hiringChart,
-    skillChart,
+    ageTrend,
+    genderChart,
+    departmentChart,
   } = useKPICalculator(filteredEmployees);
 
   const refreshDashboard = useCallback(() => {
@@ -57,7 +62,34 @@ const Dashboard = () => {
     setDepartment("");
     setLocation("");
     setStatus("");
-  }, []);
+  }, [setSearch, setDepartment, setLocation, setStatus]);
+
+
+  const departments = [
+    ...new Set(employees.map((emp: any) => emp.company?.department)),
+  ] as string[];
+
+  const locations = [
+    ...new Set(employees.map((emp: any) => emp.address?.city)),
+  ] as string[];
+
+  const roles = [...new Set(employees.map((emp: any) => emp.role))] as string[];
+
+  if (isLoading) {
+    return (
+      <div className="dashboard">
+        <h2>Loading Employees...</h2>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="dashboard">
+        <h2>Failed to load employee data.</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard">
@@ -69,6 +101,9 @@ const Dashboard = () => {
         department={department}
         location={location}
         status={status}
+        departments={departments}
+        locations={locations}
+        roles={roles}
         onSearchChange={setSearch}
         onDepartmentChange={setDepartment}
         onLocationChange={setLocation}
@@ -78,42 +113,30 @@ const Dashboard = () => {
       />
 
       <div className="kpi-grid">
-        {kpis.map((kpi) => (
-          <KPICard
-            key={kpi.id}
-            title={kpi.title}
-            value={
-              kpi.title === "Total Employees"
-                ? totalEmployees.toString()
-                : kpi.title === "Attrition Rate"
-                  ? `${attritionRate}%`
-                  : kpi.title === "Hiring Rate"
-                    ? `${hiringRate}%`
-                    : kpi.title === "Skill Coverage"
-                      ? `${skillCoverage}%`
-                      : activeEmployees.toString()
-            }
-          >
-            {kpi.title === "Total Employees" && (
-              <LineChartCard data={employeeTrend} />
-            )}
-            {kpi.title === "Attrition Rate" && (
-              <AreaChartCard data={attritionTrend} />
-            )}
-            {kpi.title === "Hiring Rate" && <PieChartCard data={hiringChart} />}
-            {kpi.title === "Skill Coverage" && (
-              <DonutChartCard data={skillChart} />
-            )}
-            {kpi.title === "Active Employees" && (
-              <LineChartCard data={activeTrend} />
-            )}
-          </KPICard>
-        ))}
+        <KPICard title="Total Employees" value={String(totalEmployees)}>
+          <LineChartCard data={employeeTrend} />
+        </KPICard>
+
+        <KPICard title="Male Employees" value={String(maleEmployees)}>
+          <AreaChartCard data={employeeTrend} />
+        </KPICard>
+
+        <KPICard title="Female Employees" value={String(femaleEmployees)}>
+          <PieChartCard data={genderChart} />
+        </KPICard>
+
+        <KPICard title="Departments" value={String(departmentCount)}>
+          <DonutChartCard data={departmentChart} />
+        </KPICard>
+
+        <KPICard title="Average Age" value={`${averageAge} Years`}>
+          <LineChartCard data={ageTrend} />
+        </KPICard>
       </div>
 
       <div className="dashboard-bottom">
         <EmployeeTable employees={filteredEmployees} />
-        <DepartmentSummary departments={departments} />
+        <DepartmentSummary employees={filteredEmployees} />
       </div>
     </div>
   );
